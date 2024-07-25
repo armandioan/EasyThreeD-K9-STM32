@@ -111,14 +111,14 @@
 // LCD Pins
 //
 #if HAS_WIRED_LCD
-  #define BEEPER_PIN                 EXP3_01_PIN
+  //#define BEEPER_PIN                 EXP3_01_PIN
   #define BTN_ENC                    EXP3_02_PIN
-  #define LCD_PINS_RS                EXP3_07_PIN
+  //#define LCD_PINS_RS                EXP3_07_PIN
 
   #define BTN_EN1                    EXP3_03_PIN
   #define BTN_EN2                    EXP3_05_PIN
 
-  #define LCD_PINS_ENABLE            EXP3_08_PIN
+  //#define LCD_PINS_ENABLE            EXP3_08_PIN
 
   #if ENABLED(MKS_MINI_12864)
 
@@ -182,13 +182,25 @@
   #define EASYTHREED_LED_PIN         EXP3_01_PIN  // Indicator LED
 #endif
 
+// #if ENABLED(EASYTHREED_K9_ET4000PLUS)
+//   #define BTN_HOME                   EXP3_07_PIN  // INPUT_PULLUP (unused) same
+//   #define BTN_FEED                   EXP3_02_PIN  // Run E Forward /same?
+//   #define BTN_RETRACT                EXP3_03_PIN  // Run E Backward /same?
+//   #define BTN_PRINT                  PA11         // Start File Print K9 only
+//   #define BTN_HOME_GND               EXP3_08_PIN  // OUTPUT (LOW) same
+//   #define BTN_FEED_GND               EXP3_05_PIN  // OUTPUT (LOW) same?
+//   #define BTN_RETRACT_GND            EXP3_06_PIN  // OUTPUT (LOW) same?
+//   #define EASYTHREED_LED_PIN         EXP3_01_PIN  // Indicator LED same
+// #endif
+
+//Armand mod
 #if ENABLED(EASYTHREED_K9_ET4000PLUS)
-  #define BTN_HOME                   EXP3_07_PIN  // INPUT_PULLUP (unused) same
-  #define BTN_FEED                   EXP3_02_PIN  // Run E Forward /same?
-  #define BTN_RETRACT                EXP3_03_PIN  // Run E Backward /same?
+  #define BTN_HOME                   PC3  // INPUT_PULLUP (unused) same
+  #define BTN_ENC                   PB3  // Run E Forward /same?
+  #define BTN_EN1                PB5  // Run E Backward /same?
   #define BTN_PRINT                  PA11         // Start File Print K9 only
-  #define BTN_HOME_GND               EXP3_08_PIN  // OUTPUT (LOW) same
-  #define BTN_FEED_GND               EXP3_05_PIN  // OUTPUT (LOW) same?
-  #define BTN_RETRACT_GND            EXP3_06_PIN  // OUTPUT (LOW) same?
-  #define EASYTHREED_LED_PIN         EXP3_01_PIN  // Indicator LED same
+  #define BTN_RETRACT               PC2  // OUTPUT (LOW) same
+  #define BTN_EN2               PB4  // OUTPUT (LOW) same?
+  #define BTN_FEED            PC1  // OUTPUT (LOW) same?
+  #define EASYTHREED_LED_PIN         PD2  // Indicator LED same
 #endif
