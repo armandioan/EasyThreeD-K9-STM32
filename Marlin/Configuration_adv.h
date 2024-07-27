@@ -1347,7 +1347,7 @@
 // @section lcd
 
 #if HAS_MANUAL_MOVE_MENU
-  #define MANUAL_FEEDRATE { 50*60, 50*60, 4*60, 2*60 } // (mm/min) Feedrates for manual moves along X, Y, Z, E from panel
+  #define MANUAL_FEEDRATE { 50*60, 50*60, 10*60, 5*60 } // (mm/min) Feedrates for manual moves along X, Y, Z, E from panel
   #define FINE_MANUAL_MOVE 0.025    // (mm) Smallest manual move (< 0.1mm) applying to Z on most machines
   #if IS_ULTIPANEL
     #define MANUAL_E_MOVES_RELATIVE // Display extruder move distance rather than "position"
@@ -1426,7 +1426,7 @@
 
 #if ANY(HAS_DISPLAY, DWIN_LCD_PROUI, DWIN_CREALITY_LCD_JYERSUI)
   //#define SOUND_MENU_ITEM   // Add a mute option to the LCD menu
-  #define SOUND_ON_DEFAULT    // Buzzer/speaker default enabled state
+  //#define SOUND_ON_DEFAULT    // Buzzer/speaker default enabled state
 #endif
 
 #if EITHER(HAS_DISPLAY, DWIN_LCD_PROUI)
@@ -1434,7 +1434,7 @@
   //#define LCD_TIMEOUT_TO_STATUS 15000   // (ms)
 
   #if ENABLED(SHOW_BOOTSCREEN)
-    #define BOOTSCREEN_TIMEOUT 4000       // (ms) Total Duration to display the boot screen(s)
+    #define BOOTSCREEN_TIMEOUT 2000       // (ms) Total Duration to display the boot screen(s)
     #if EITHER(HAS_MARLINUI_U8GLIB, TFT_COLOR_UI)
       #define BOOT_MARLIN_LOGO_SMALL      // Show a smaller Marlin logo on the Boot Screen (saving lots of flash)
     #endif
@@ -3812,7 +3812,7 @@
   #if PIN_EXISTS(BUTTON1)
     #define BUTTON1_HIT_STATE     LOW
     #define BUTTON1_WHEN_PRINTING false
-    #define BUTTON1_GCODE         "G28"
+    #define BUTTON1_GCODE         "G0 Z5\nG0 X10 Y10\nG0 Z0"
     #define BUTTON1_DESC          "Levelling Position 1"
   #endif
 
@@ -3821,25 +3821,25 @@
   #if PIN_EXISTS(BUTTON2)
     #define BUTTON2_HIT_STATE     LOW
     #define BUTTON2_WHEN_PRINTING false
-    #define BUTTON2_GCODE         "G0 Z5\nG0 X0 Y100\nG0 Z0"
+    #define BUTTON2_GCODE         "G0 Z5\nG0 X90 Y10\nG0 Z0"
     #define BUTTON2_DESC          "Levelling Position 2"
   #endif
 
   // Levelling button 3
   #define BUTTON3_PIN PA2
   #if PIN_EXISTS(BUTTON3)
-    #define BUTTON3_HIT_STATE     HIGH
+    #define BUTTON3_HIT_STATE     LOW
     #define BUTTON3_WHEN_PRINTING false
-    #define BUTTON3_GCODE         "G0 Z5\nG0 X100 Y100\nG0 Z0"
+    #define BUTTON3_GCODE         "G0 Z5\nG0 X90 Y90\nG0 Z0"
     #define BUTTON3_DESC          "Levelling Position 3"
   #endif
 
   // Levelling button 4
   #define BUTTON4_PIN PA3
   #if PIN_EXISTS(BUTTON4)
-    #define BUTTON4_HIT_STATE     HIGH
+    #define BUTTON4_HIT_STATE     LOW
     #define BUTTON4_WHEN_PRINTING false
-    #define BUTTON4_GCODE         "G0 Z5\nG0 X100 Y0\nG0 Z0"
+    #define BUTTON4_GCODE         "G0 Z5\nG0 X10 Y90\nG0 Z0"
     #define BUTTON4_DESC          "Levelling Position 4"
   #endif
 

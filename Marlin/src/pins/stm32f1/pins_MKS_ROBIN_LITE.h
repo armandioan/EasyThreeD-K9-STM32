@@ -112,11 +112,11 @@
 //
 #if HAS_WIRED_LCD
   //#define BEEPER_PIN                 EXP3_01_PIN
-  #define BTN_ENC                    EXP3_02_PIN
+  #define BTN_ENC                    PB3
   //#define LCD_PINS_RS                EXP3_07_PIN
 
-  #define BTN_EN1                    EXP3_03_PIN
-  #define BTN_EN2                    EXP3_05_PIN
+  #define BTN_EN1                    PB5
+  #define BTN_EN2                    PB4
 
   //#define LCD_PINS_ENABLE            EXP3_08_PIN
 

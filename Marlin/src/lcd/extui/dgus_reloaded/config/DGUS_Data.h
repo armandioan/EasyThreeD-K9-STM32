@@ -96,6 +96,9 @@ namespace DGUS_Data {
   enum class Extra : uint8_t {
     BUTTON1 = 0,
     BUTTON2 = 1
+    // BUTTON3 = 2,
+    // BUTTON4 = 3,
+    // BUTTON5 = 4
   };
 
   // TX constants

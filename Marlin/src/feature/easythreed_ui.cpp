@@ -36,7 +36,7 @@
 
 EasythreedUI easythreed_ui;
 
-#define BTN_DEBOUNCE_MS 20
+#define BTN_DEBOUNCE_MS 50
 
 void EasythreedUI::init() {
   SET_INPUT_PULLUP(BTN_HOME);   //  SET_OUTPUT(BTN_HOME_GND); //to do 
@@ -45,8 +45,9 @@ void EasythreedUI::init() {
   SET_INPUT_PULLUP(BTN_PRINT);
   SET_OUTPUT(EASYTHREED_LED_PIN);
 #ifdef EASYTHREED_K9_ET4000PLUS
-  SET_INPUT_PULLDOWN(PA2);
-  SET_INPUT_PULLDOWN(PA3);
+  SET_INPUT_PULLUP(PA2);
+  SET_INPUT_PULLUP(PA3);
+
 #endif
 }
 
