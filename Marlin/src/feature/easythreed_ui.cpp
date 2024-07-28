@@ -39,9 +39,9 @@ EasythreedUI easythreed_ui;
 #define BTN_DEBOUNCE_MS 50
 
 void EasythreedUI::init() {
-  SET_INPUT_PULLUP(BTN_HOME);   //  SET_OUTPUT(BTN_HOME_GND); //to do 
-  SET_INPUT_PULLUP(BTN_FEED);     //SET_OUTPUT(BTN_FEED_GND);
-  SET_INPUT_PULLUP(BTN_RETRACT);  //SET_OUTPUT(BTN_RETRACT_GND);
+  SET_INPUT_PULLUP(BTN_HOME);   
+  SET_INPUT_PULLUP(BTN_FEED);    
+  SET_INPUT_PULLUP(BTN_RETRACT); 
   SET_INPUT_PULLUP(BTN_PRINT);
   SET_OUTPUT(EASYTHREED_LED_PIN);
 #ifdef EASYTHREED_K9_ET4000PLUS
@@ -115,6 +115,7 @@ void EasythreedUI::loadButton() {
       if (ELAPSED(millis(), filament_time + BTN_DEBOUNCE_MS)) {     // After a short debounce delay...
         if (!READ(BTN_RETRACT) || !READ(BTN_FEED)) {                // ...if switch still toggled...
           thermalManager.setTargetHotend(EXTRUDE_MINTEMP + 10, 0);  // Start heating up
+          queue.inject(F("G91\nG0 Z10 F900\nG90"));                 // Raise Z to protect bed from heat
           blink_interval_ms = LED_BLINK_7;                          // Set the LED to blink fast
           filament_status++;
         }
@@ -135,7 +136,7 @@ void EasythreedUI::loadButton() {
       }
       break;
 
-    case FS_PROCEED: {
+    case FS_PROCEED: 
       // Feed or Retract just once. Hard abort all moves and return to idle on switch release.
       static bool flag = false;
       if (READ(BTN_RETRACT) && READ(BTN_FEED)) {                    // Switch in center position (stop)
@@ -148,9 +149,11 @@ void EasythreedUI::loadButton() {
       }
       else if (!flag) {
         flag = true;
-        queue.inject(!READ(BTN_RETRACT) ? F("G91\nG0 E10 F180\nG0 E-120 F180\nG90\nM104 S0") : F("G91\nG0 E100 F120\nG90\nM104 S0"));
+          // queue.inject(!READ(BTN_RETRACT) ? F("G91\nG0 E10 F180\nG0 E-120 F180\nG90\nM104 S0") : F("G91\nG0 E100 F120\nG90\nM104 S0"));
+          queue.inject(!READ(BTN_RETRACT) ? F("M106\nG91\nG0 E10 F180\nG0 E-100 F180\nG90\nM104 S0\nM107") : F("M106\nM104 S185\nG91\nG0 E75 F120\nG90\nM107")); //\nM104 S0
+
       }
-    } break;
+      break;
   }
 
 }
@@ -204,6 +207,7 @@ void EasythreedUI::printButton() {
             const uint16_t filecnt = card.countFilesInWorkDir();    // Count printable files in cwd
             if (filecnt == 0) return;                               // None are printable?
             card.selectFileByIndex(filecnt);                        // Select the last file according to current sort options
+            queue.inject(F("G91\nG0 Z10 F900\nG90"));                 // Raise Z to protect bed from heat
             card.openAndPrintFile(card.filename);                   // Start printing it
             break;
           }
@@ -226,7 +230,7 @@ void EasythreedUI::printButton() {
       else {                                                        // Register a longer press
         if (print_key_flag == PF_START && !printingIsActive())  {   // While not printing, this moves Z up 10mm
           blink_interval_ms = LED_ON;
-          queue.inject(F("G91\nG0 Z10 F600\nG90"));                 // Raise Z soon after returning to main loop
+          queue.inject(F("G91\nG0 F900 Z20\nG90"));                 // Raise Z soon after returning to main loop
         }
         else {                                                      // While printing, cancel print
           card.abortFilePrintNow();                                // There is a delay while the current steps play out

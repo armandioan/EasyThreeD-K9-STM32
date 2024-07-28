@@ -87,6 +87,7 @@
 
 #define FIL_RUNOUT_PIN                      PB8   // MT_DET
 
+///////////////////////for k7???
 /**                ------
  *   (BEEPER) PD2 | 1  2 | PB3  (BTN_ENC)
  *  (BTN_EN1) PB5 | 3  4 | PA11 (RESET?)
@@ -106,6 +107,31 @@
 #define EXP3_08_PIN                         PC2
 #define EXP3_09_PIN                         -1    // GND
 #define EXP3_10_PIN                         -1    // 5V
+
+
+// /**                ------
+//  *   (BTN_HOME) PC3 | 1  2 | VCC 5V
+//  *  (RETRACT) PC2 | 3  4 | PA11 (RESET?)
+//  *  (BTN_ENC) PB3   5  6 | PB4  (BTN_EN2)
+//  *   (LCD_RS) PC3 | 7  8 | PB5  (BTN_EN1)
+//  *            GND | 9 10 | 5V
+//  *                 ------
+//  *               "E3" EXP1
+//  */
+// #define EXP1_01_PIN                         PC3 // BTN_HOME
+// // #define EXP1_02_PIN                         VCC 5V
+// #define EXP1_03_PIN                         PC2 //LCD_CS -> RETRACT
+// #define EXP1_04_PIN                           // RESET
+// #define EXP1_05_PIN                         PB3  //BTN_ENC
+// #define EXP1_06_PIN                         PB4  //BTN_EN2
+// #define EXP1_07_PIN                         PC1  //LCD_RS -> FEED
+// #define EXP1_08_PIN                         PB5  //BTN_EN1
+// // #define EXP1_09_PIN                         -1    // SD_SCK -> X
+// // #define EXP1_10_PIN                         -1    // SD_MOSI -> X
+// // #define EXP1_11_PIN                         -1    // DGND
+// // #define EXP1_12_PIN                         -1    // 3V3
+// #define EXP1_13_PIN                         PA11    // IO1 -> PRINT_BUTTON
+// #define EXP1_14_PIN                         PD2    // BEEPER -> LED_HOME_BUTTON
 
 //
 // LCD Pins
@@ -131,7 +157,7 @@
 
   #else                                           // !MKS_MINI_12864
 
-    #define LCD_PINS_D4              EXP3_06_PIN
+    // #define LCD_PINS_D4              EXP1_07_PIN
     #if IS_ULTIPANEL
       #define LCD_PINS_D5                   -1
       #define LCD_PINS_D6                   -1
@@ -195,12 +221,12 @@
 
 //Armand mod
 #if ENABLED(EASYTHREED_K9_ET4000PLUS)
-  #define BTN_HOME                   PC3  // INPUT_PULLUP (unused) same
-  #define BTN_ENC                   PB3  // Run E Forward /same?
-  #define BTN_EN1                PB5  // Run E Backward /same?
-  #define BTN_PRINT                  PA11         // Start File Print K9 only
-  #define BTN_RETRACT               PC2  // OUTPUT (LOW) same
-  #define BTN_EN2               PB4  // OUTPUT (LOW) same?
-  #define BTN_FEED            PC1  // OUTPUT (LOW) same?
-  #define EASYTHREED_LED_PIN         PD2  // Indicator LED same
+  #define BTN_HOME               PC3  // G28 Homing
+  #define BTN_ENC                PB3  // Controller button
+  #define BTN_EN1                PB5  // encoder1
+  #define BTN_PRINT              PA11 // Start File Print  
+  #define BTN_RETRACT            PC2  // 
+  #define BTN_EN2                PB4  // encoder2
+  #define BTN_FEED               PC1  //
+  #define EASYTHREED_LED_PIN     PD2  // Indicator LED Print button
 #endif

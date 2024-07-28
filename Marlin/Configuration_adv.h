@@ -1169,8 +1169,8 @@
 #if ENABLED(BACKLASH_COMPENSATION)
   // Define values for backlash distance and correction.
   // If BACKLASH_GCODE is enabled these values are the defaults.
-  #define BACKLASH_DISTANCE_MM { 0.0, 0.0, 0.0 } // (linear=mm, rotational=°) One value for each linear axis
-  #define BACKLASH_CORRECTION    0.0       // 0.0 = no correction; 1.0 = full correction
+  #define BACKLASH_DISTANCE_MM { 0.8, 0.7, 0.8 } // (linear=mm, rotational=°) One value for each linear axis
+  #define BACKLASH_CORRECTION    0       // 0.0 = no correction; 1.0 = full correction
 
   // Add steps for motor direction changes on CORE kinematics
   //#define CORE_BACKLASH
@@ -1347,7 +1347,7 @@
 // @section lcd
 
 #if HAS_MANUAL_MOVE_MENU
-  #define MANUAL_FEEDRATE { 50*60, 50*60, 10*60, 5*60 } // (mm/min) Feedrates for manual moves along X, Y, Z, E from panel
+  #define MANUAL_FEEDRATE { 50*60, 50*60, 25*60, 10*60 } // (mm/min) Feedrates for manual moves along X, Y, Z, E from panel
   #define FINE_MANUAL_MOVE 0.025    // (mm) Smallest manual move (< 0.1mm) applying to Z on most machines
   #if IS_ULTIPANEL
     #define MANUAL_E_MOVES_RELATIVE // Display extruder move distance rather than "position"
@@ -2112,7 +2112,7 @@
   #if ENABLED(DISTINCT_E_FACTORS)
     #define ADVANCE_K { 0.22 }    // (mm) Compression length per 1mm/s extruder speed, per extruder
   #else
-    #define ADVANCE_K 0.22        // (mm) Compression length applying to all extruders
+    #define ADVANCE_K 0.2        // (mm) Compression length applying to all extruders
   #endif
   //#define ADVANCE_K_EXTRA       // Add a second linear advance constant, configurable with M900 L.
   //#define LA_DEBUG              // Print debug information to serial during operation. Disable for production use.
@@ -3812,7 +3812,7 @@
   #if PIN_EXISTS(BUTTON1)
     #define BUTTON1_HIT_STATE     LOW
     #define BUTTON1_WHEN_PRINTING false
-    #define BUTTON1_GCODE         "G0 Z5\nG0 X10 Y10\nG0 Z0"
+    #define BUTTON1_GCODE         "G0 F900 Z5\nG0 F3000 X10 Y10 \nG0 F1200 Z0"
     #define BUTTON1_DESC          "Levelling Position 1"
   #endif
 
@@ -3821,7 +3821,7 @@
   #if PIN_EXISTS(BUTTON2)
     #define BUTTON2_HIT_STATE     LOW
     #define BUTTON2_WHEN_PRINTING false
-    #define BUTTON2_GCODE         "G0 Z5\nG0 X90 Y10\nG0 Z0"
+    #define BUTTON2_GCODE         "G0 F900 Z5\nG0 F3000 X90 Y10\nG0 F1200 Z0"
     #define BUTTON2_DESC          "Levelling Position 2"
   #endif
 
@@ -3830,7 +3830,7 @@
   #if PIN_EXISTS(BUTTON3)
     #define BUTTON3_HIT_STATE     LOW
     #define BUTTON3_WHEN_PRINTING false
-    #define BUTTON3_GCODE         "G0 Z5\nG0 X90 Y90\nG0 Z0"
+    #define BUTTON3_GCODE         "G0 F900 Z5\nG0 F3000 X90 Y90\nG0 F1200 Z0"
     #define BUTTON3_DESC          "Levelling Position 3"
   #endif
 
@@ -3839,7 +3839,7 @@
   #if PIN_EXISTS(BUTTON4)
     #define BUTTON4_HIT_STATE     LOW
     #define BUTTON4_WHEN_PRINTING false
-    #define BUTTON4_GCODE         "G0 Z5\nG0 X10 Y90\nG0 Z0"
+    #define BUTTON4_GCODE         "G0 F900 Z5\nG0 F3000 X10 Y90\nG0 F1200 Z0"
     #define BUTTON4_DESC          "Levelling Position 4"
   #endif
 
