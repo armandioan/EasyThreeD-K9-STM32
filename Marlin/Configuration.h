@@ -1170,6 +1170,10 @@
  * Override with M92
  *                                      X, Y, Z [, I [, J [, K...]]], E0 [, E1[, E2...]]
  */
+// >DEFAULT_X_STEPS_PER_UNIT	606	#Default Axis-X Steps Per Unit (steps/mm)	
+// >DEFAULT_Y_STEPS_PER_UNIT	606	#Default Axis-Y Steps Per Unit (steps/mm)	
+// >DEFAULT_Z_STEPS_PER_UNIT	600	#Default Axis-Z Steps Per Unit (steps/mm)	
+// >DEFAULT_E_STEPS_PER_UNIT	1040	#Default Axis-E Steps Per Unit (steps/mm)	
 #define DEFAULT_AXIS_STEPS_PER_UNIT   { 606, 606, 606, 1040 }
 
 /**
@@ -1177,7 +1181,12 @@
  * Override with M203
  *                                      X, Y, Z [, I [, J [, K...]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_MAX_FEEDRATE          { 100, 100, 25, 150 }
+//#define DEFAULT_MAX_FEEDRATE          { 40, 40, 10, 70 }
+#define DEFAULT_MAX_FEEDRATE          { 50, 50, 25, 100 }
+// >DEFAULT_X_MAX_FEEDRATE		40	#Default Axis-X Max Feed Rate (mm/s)		
+// >DEFAULT_Y_MAX_FEEDRATE		40	#Default Axis-Y Max Feed Rate (mm/s)		
+// >DEFAULT_Z_MAX_FEEDRATE		10	#Default Axis-Z Max Feed Rate (mm/s)		
+// >DEFAULT_E_MAX_FEEDRATE		70	#Default Axis-E Max Feed Rate (mm/s)	
 
 //#define LIMITED_MAX_FR_EDITING        // Limit edit via M203 or LCD to DEFAULT_MAX_FEEDRATE * 2
 #if ENABLED(LIMITED_MAX_FR_EDITING)
@@ -1190,7 +1199,13 @@
  * Override with M201
  *                                      X, Y, Z [, I [, J [, K...]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_MAX_ACCELERATION      { 250, 250, 100, 500 }
+// #define DEFAULT_MAX_ACCELERATION      { 1000, 1000, 100, 1000 }
+#define DEFAULT_MAX_ACCELERATION      { 100, 100, 25, 200 }
+// >DEFAULT_X_MAX_ACCELERATION	100	#Default Axis-X Max Acceleration (change/s) change = mm/s
+// >DEFAULT_Y_MAX_ACCELERATION	100	#Default Axis-Y Max Acceleration (change/s) change = mm/s
+// >DEFAULT_Z_MAX_ACCELERATION	50	#Default Axis-Z Max Acceleration (change/s) change = mm/s
+// >DEFAULT_E_MAX_ACCELERATION	100	#Default Axis-E Max Acceleration (change/s) change = mm/s
+
 
 //#define LIMITED_MAX_ACCEL_EDITING     // Limit edit via M201 or LCD to DEFAULT_MAX_ACCELERATION * 2
 #if ENABLED(LIMITED_MAX_ACCEL_EDITING)
@@ -1205,9 +1220,15 @@
  *   M204 R    Retract Acceleration
  *   M204 T    Travel Acceleration
  */
-#define DEFAULT_ACCELERATION          150    // X, Y, Z and E acceleration for printing moves
-#define DEFAULT_RETRACT_ACCELERATION  250    // E acceleration for retracts
-#define DEFAULT_TRAVEL_ACCELERATION   200    // X, Y, Z acceleration for travel (non printing) moves
+// #define DEFAULT_ACCELERATION          1000    // X, Y, Z and E acceleration for printing moves
+// #define DEFAULT_RETRACT_ACCELERATION  1000    // E acceleration for retracts
+// #define DEFAULT_TRAVEL_ACCELERATION   1000    // X, Y, Z acceleration for travel (non printing) moves
+#define DEFAULT_ACCELERATION          50    // X, Y, Z and E acceleration for printing moves
+#define DEFAULT_RETRACT_ACCELERATION  100    // E acceleration for retracts
+#define DEFAULT_TRAVEL_ACCELERATION   50    // X, Y, Z acceleration for travel (non printing) moves
+// >DEFAULT_ACCELERATION		100	#X, Y, Z and E acceleration for printing moves		
+// >DEFAULT_RETRACT_ACCELERATION	100	#X, Y, Z and E acceleration for retracts		
+// >DEFAULT_TRAVEL_ACCELERATION	100	#X, Y, Z acceleration for travel (non printing) moves	
 
 /**
  * Default Jerk limits (mm/s)
@@ -1237,7 +1258,9 @@
   #endif
 #endif
 
-#define DEFAULT_EJERK    2.0  // May be used by Linear Advance
+// >DEFAULT_EJERK 			0.5	#Default Axis-E Jerk (mm/s)	
+// #define DEFAULT_EJERK    2.0  // May be used by Linear Advance
+#define DEFAULT_EJERK    1.0  // May be used by Linear Advance
 
 /**
  * Junction Deviation Factor
@@ -1247,8 +1270,8 @@
  *   https://blog.kyneticcnc.com/2018/10/computing-junction-deviation-for-marlin.html
  */
 #if DISABLED(CLASSIC_JERK)
-  #define JUNCTION_DEVIATION_MM 0.05
-  // #define JUNCTION_DEVIATION_MM 0.013 // (mm) Distance from real junction edge
+// #define JUNCTION_DEVIATION_MM 0.013 // (mm) Distance from real junction edge
+  #define JUNCTION_DEVIATION_MM 0.005 //greater values than default give layer shift?
   #define JD_HANDLE_SMALL_SEGMENTS    // Use curvature estimation instead of just the junction angle
                                       // for small segments (< 1mm) with large junction angles (> 135°).
 #endif
@@ -1493,10 +1516,12 @@
 #define PROBING_MARGIN 10
 
 // X and Y axis travel speed (mm/min) between probes
-#define XY_PROBE_FEEDRATE (150*60)
+// #define XY_PROBE_FEEDRATE (133*60)
+#define XY_PROBE_FEEDRATE (100*60)
 
 // Feedrate (mm/min) for the first approach when double-probing (MULTIPLE_PROBING == 2)
-#define Z_PROBE_FEEDRATE_FAST (150*60)
+// #define Z_PROBE_FEEDRATE_FAST (4*60)
+#define Z_PROBE_FEEDRATE_FAST (25*60)
 
 // Feedrate (mm/min) for the "accurate" probe of each point
 #define Z_PROBE_FEEDRATE_SLOW (Z_PROBE_FEEDRATE_FAST / 2)
@@ -1706,7 +1731,7 @@
 #define Z_MIN_POS -1
 #define X_MAX_POS X_BED_SIZE
 #define Y_MAX_POS Y_BED_SIZE
-#define Z_MAX_POS 100
+#define Z_MAX_POS 99
 //#define I_MIN_POS 0
 //#define I_MAX_POS 50
 //#define J_MIN_POS 0
@@ -2101,6 +2126,7 @@
 #endif
 
 // Homing speeds (linear=mm/min, rotational=°/min)
+// #define HOMING_FEEDRATE_MM_M { 2400, 2400, 2400 }
 #define HOMING_FEEDRATE_MM_M { 3000, 3000, 3000 }
 
 // Validate that endstops are triggered on homing moves

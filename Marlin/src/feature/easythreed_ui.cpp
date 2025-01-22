@@ -115,7 +115,7 @@ void EasythreedUI::loadButton() {
       if (ELAPSED(millis(), filament_time + BTN_DEBOUNCE_MS)) {     // After a short debounce delay...
         if (!READ(BTN_RETRACT) || !READ(BTN_FEED)) {                // ...if switch still toggled...
           thermalManager.setTargetHotend(EXTRUDE_MINTEMP + 10, 0);  // Start heating up
-          queue.inject(F("G91\nG0 Z10 F900\nG90"));                 // Raise Z to protect bed from heat
+          queue.inject(F("G91\nG0 Z20 F900\nG90"));                 // Raise Z to protect bed from heat
           blink_interval_ms = LED_BLINK_7;                          // Set the LED to blink fast
           filament_status++;
         }
@@ -129,6 +129,7 @@ void EasythreedUI::loadButton() {
         blink_interval_ms = LED_ON;                                 // LED on steady
         filament_status = FS_IDLE;
         thermalManager.disable_all_heaters();
+        queue.inject(F("G91\nG0 Z-21 F900\nG0 Z1 F900\nG90")); 
       }
       else if (thermalManager.hotEnoughToExtrude(0)) {              // Is the hotend hot enough to move material?
         filament_status++;                                          // Proceed to feed / retract.
@@ -144,13 +145,14 @@ void EasythreedUI::loadButton() {
         filament_status = FS_IDLE;                                  // Go back to idle state
         quickstop_stepper();                                        // Hard-stop all the steppers ... now!
         thermalManager.disable_all_heaters();                       // And disable all the heaters
+        queue.inject(F("G91\nG0 Z-21 F900\nG0 Z1 F900\nG90")); 
    //     queue.inject(F("G90"));                                     // Ensure we return to absolute positioning
         blink_interval_ms = LED_ON;
       }
       else if (!flag) {
         flag = true;
           // queue.inject(!READ(BTN_RETRACT) ? F("G91\nG0 E10 F180\nG0 E-120 F180\nG90\nM104 S0") : F("G91\nG0 E100 F120\nG90\nM104 S0"));
-          queue.inject(!READ(BTN_RETRACT) ? F("M106\nG91\nG0 E10 F180\nG0 E-100 F180\nG90\nM104 S0\nM107") : F("M106\nM104 S185\nG91\nG0 E75 F120\nG90\nM107")); //\nM104 S0
+          queue.inject(!READ(BTN_RETRACT) ? F("M106\nG91\nG0 E10 F180\nG0 E-200 F180\nG90\nM104 S0\nM107") : F("M106\nM104 S190\nG91\nG0 E150 F120\nG90")); //\nM104 S0
 
       }
       break;
@@ -215,12 +217,14 @@ void EasythreedUI::printButton() {
             if (!printingIsActive()) break;
             blink_interval_ms = LED_ON;                             // Set indicator to steady ON
             queue.inject(F("M25"));                                 // Queue Pause
+            queue.inject(F("G91\nG0 Z10 F900\nG90"));                 // Raise Z to protect print from hot nozzle
             print_key_flag = PF_RESUME;                             // The "Print" button now resumes the print
             break;
             }
           case PF_RESUME: {                                         // Resume printing
             if (printingIsActive()) break;
             blink_interval_ms = LED_BLINK_2;                        // Blink the indicator LED at 1 second intervals
+            queue.inject(F("G91\nG0 Z-11 F900\nG0 Z1 F900\nG90"));                 // Lower Z back then lift a little to compensate backlash of z axis
             queue.inject(F("M24"));                                 // Queue resume
             print_key_flag = PF_PAUSE;                              // The "Print" button now pauses the print
             break;
